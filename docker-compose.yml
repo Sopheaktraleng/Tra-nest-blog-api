@@ -1,0 +1,25 @@
+version: "2"
+services:
+  server:
+    build: .
+    container_name: tra-api-server
+    depends_on:
+      - db
+    volumes:
+      - ./src:/app/src
+      - ./test:/app/test
+      - .env:/app/.env
+    restart: unless-stopped
+  db:
+    image: postgres:14.10
+    container_name: tra-db
+    environment:
+      POSTGRES_DB: nest
+      POSTGRES_USER: nest
+      POSTGRES_PASSWORD: nest
+    ports:
+      - 5432:5432
+    volumes:
+      - postgresdata:/var/lib/postgresql
+volumes:
+  postgresdata:
