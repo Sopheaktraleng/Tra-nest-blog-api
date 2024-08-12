@@ -2,7 +2,9 @@ version: "2"
 services:
   server:
     build: .
-    container_name: tra-api-server
+    container_name: tra-server
+    ports:
+      - 4000:4000
     depends_on:
       - db
     volumes:

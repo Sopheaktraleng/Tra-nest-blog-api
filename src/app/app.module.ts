@@ -3,6 +3,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule, TypeOrmModuleAsyncOptions } from '@nestjs/typeorm';
+import { UserModule } from 'src/modules/user/user.module';
+import { BooksModule } from 'src/books/books.module';
 
 @Module({
   imports: [
@@ -24,6 +26,8 @@ import { TypeOrmModule, TypeOrmModuleAsyncOptions } from '@nestjs/typeorm';
         } as TypeOrmModuleAsyncOptions;
       },
     }),
+    UserModule,
+    BooksModule,
   ],
   controllers: [AppController],
   providers: [AppService],
