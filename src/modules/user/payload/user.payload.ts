@@ -1,13 +1,20 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import {
+  IsAlphanumeric,
+  IsEmail,
+  IsNotEmpty,
+  MinLength,
+} from 'class-validator';
 
 export class UserPayload {
-  @IsString()
+  @IsEmail()
   @IsNotEmpty()
   email: string;
-  @IsString()
+  @IsAlphanumeric()
+  @IsNotEmpty()
   username: string;
-  @IsString()
+  @IsNotEmpty()
+  @MinLength(5)
   password: string;
-  @IsString()
+  @IsNotEmpty()
   dateOfBirth: string;
 }
