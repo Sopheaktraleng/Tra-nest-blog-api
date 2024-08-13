@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { UserEnity } from './entity/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -15,16 +15,35 @@ export class UserService {
     const newUser = await this.userReposity.create(userpayload);
     return await this.userReposity.save(newUser);
   }
-  getAll(): string {
-    return 'Get all Users!!!';
+  // Get All Users
+  async getAll(): Promise<UserEnity[]> {
+    return await this.userReposity.find();
   }
-  getUserById() {
-    return 'User #${id} ';
+  // Get User By ID
+  async getUserById(id: string): Promise<UserEnity> {
+    const user = await this.userReposity.findOne({ where: { id } });
+    if (!user) {
+      throw new NotFoundException('User with ID ${ id } not found');
+    }
+    return user;
   }
-  deleteUserById(): string {
-    return 'User is deleted!!';
+  // Delete User By ID
+  async deleteUserById(id: string) {
+    const result = await this.userReposity.delete(id);
+    if (result.affected === 0) {
+      throw new NotFoundException('User with ID ${id} not found');
+    }
+    return 'User is deleted successfully!!!';
   }
-  updateById(): string {
-    return 'user is updateddd!!';
+  // Update by Id
+  async updateById(id: string, userPayload: UserPayload): Promise<UserEnity> {
+    const user = await this.userReposity.preload({
+      id: id,
+      ...userPayload,
+    });
+    if (!user) {
+      throw new NotFoundException('User with id ${id} not found!!');
+    }
+    return await this.userReposity.save(user);
   }
 }
