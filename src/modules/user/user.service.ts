@@ -3,7 +3,7 @@ import { UserEnity } from './entity/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserPayload } from './payload/user.payload';
-
+import * as bcrypt from 'bcryptjs';
 @Injectable()
 export class UserService {
   constructor(
@@ -12,8 +12,13 @@ export class UserService {
   ) {}
   // Register
   async create(userpayload: UserPayload): Promise<UserEnity> {
-    const newUser = await this.userReposity.create(userpayload);
-    return await this.userReposity.save(newUser);
+    const salt = await bcrypt.genSalt();
+    const hashedPassword = await bcrypt.hash(userpayload.password, salt);
+    const user = this.userReposity.create({
+      ...userpayload,
+      password: hashedPassword,
+    });
+    return await this.userReposity.save(user);
   }
   // Get All Users
   async getAll(): Promise<UserEnity[]> {
@@ -26,6 +31,10 @@ export class UserService {
       throw new NotFoundException('User with ID ${ id } not found');
     }
     return user;
+  }
+  // Get User by Username
+  async getbyUsername(username: string) {
+    return await this.userReposity.findOne({ where: { username } });
   }
   // Delete User By ID
   async deleteUserById(id: string) {
