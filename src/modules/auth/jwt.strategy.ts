@@ -16,15 +16,18 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       secretOrKey: configService.get('JWT_SECRET_KEY'),
     });
   }
-  async validate({ iat, exp, id }: JwtPayload) {
+  async validate({ iat, exp, id }: JwtPayload, done) {
     const timeDiff = exp - iat;
     if (timeDiff <= 0) {
       throw new UnauthorizedException();
     }
+
     const user = await this.userService.getUserById(id);
     if (!user) {
       throw new UnauthorizedException();
     }
-    return user;
+
+    delete user.password;
+    done(null, user);
   }
 }
