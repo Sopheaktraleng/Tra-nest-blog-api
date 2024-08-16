@@ -1,10 +1,19 @@
-import { Body, Controller, Post, Req, Get, Res } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post,
+  Req,
+  Get,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { LoginPayload } from './payload/login.payload';
 import { AuthService } from './auth.service';
 import { ConfigService } from '@nestjs/config';
 import { Response } from 'express';
+import { GoogleOuthGuard } from '../common/guard/google-oauth.guard';
 
 @Controller('auths')
 @ApiTags('Authentication')
@@ -31,7 +40,7 @@ export class AuthController {
     const uri = `http://accounts.google.com/o/oauth2/v2/auth?client_id=${client_id}&redirect_uri=${client_callback}&response_type=code&scope=email profile openid`;
     response.redirect(uri);
   }
-
+  @UseGuards(GoogleOuthGuard)
   @Get('google/callback')
   async goolgeCallback(@Req() request): Promise<any> {
     return request.user;

@@ -7,10 +7,12 @@ import { PassportModule } from '@nestjs/passport';
 import { UserModule } from '../user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEnity } from '../user/entity/user.entity';
-import { JwtStrategy } from './jwt.strategy';
+import { JwtStrategy } from '../common/strategy/jwt.strategy';
+import { GoogleStrategy } from '../common/strategy/google.strategy';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
     UserModule,
     TypeOrmModule.forFeature([UserEnity]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
