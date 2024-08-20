@@ -1,10 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
-import { Strategy, VerifiedCallback } from 'passport-jwt';
+import { Strategy, VerifiedCallback } from 'passport-google-oauth2';
+import { AuthService } from 'src/modules/auth/auth.service';
 @Injectable()
 export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
-  constructor(readonly configService: ConfigService) {
+  constructor(
+    readonly configService: ConfigService,
+    private readonly authService: AuthService,
+  ) {
     super({
       clientID: configService.get<string>('GOOGLE_CLIENT_ID'),
       clientSecret: configService.get<string>('GOOGLE_CLIENT_SECRET'),
@@ -13,8 +17,8 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     });
   }
   async validate(
-    accessToken: string,
-    refreshToken: string,
+    _accessToken: string,
+    _refreshToken: string,
     profile: any,
     done: VerifiedCallback,
   ): Promise<any> {
@@ -27,7 +31,9 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
       firstname: name.givenName,
       lastname: name.familyName,
       picture: photos[0].value,
+      _accessToken,
     };
-    done(null, user);
+    const validateUser = await this.authService.validateUserOauth(user);
+    done(null, validateUser);
   }
 }

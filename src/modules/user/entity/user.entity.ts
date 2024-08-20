@@ -4,11 +4,15 @@ import { Column, Entity } from 'typeorm';
 @Entity('User')
 export class UserEnity extends CommonEntity {
   @Column()
-  email: string;
-  @Column()
   username: string;
   @Column()
-  password: string;
+  email: string;
   @Column()
-  dateOfBirth: string;
+  firstname: string;
+  @Column()
+  lastname: string;
+  @Column()
+  picture: string;
+  @Column()
+  password: string;
 }

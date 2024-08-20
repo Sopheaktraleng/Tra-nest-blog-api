@@ -1,18 +1,9 @@
-import {
-  Body,
-  Controller,
-  Post,
-  Req,
-  Get,
-  Res,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Post, Req, Get, UseGuards } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { LoginPayload } from './payload/login.payload';
 import { AuthService } from './auth.service';
 import { ConfigService } from '@nestjs/config';
-import { Response } from 'express';
 import { GoogleOuthGuard } from '../common/guard/google-oauth.guard';
 
 @Controller('auths')
@@ -34,15 +25,13 @@ export class AuthController {
     return await this.userService.getbyUsername(request.username);
   }
   @Get('login-google')
-  loginGoogle(@Res() response: Response): any {
-    const client_id = this.configService.get<string>('GOOGLE_CLIENT_ID');
-    const client_callback = this.configService.get<string>('GOOGLE_CALLBACK');
-    const uri = `http://accounts.google.com/o/oauth2/v2/auth?client_id=${client_id}&redirect_uri=${client_callback}&response_type=code&scope=email profile openid`;
-    response.redirect(uri);
+  @UseGuards(GoogleOuthGuard)
+  async loginGoogle(@Req() req) {
+    return req;
   }
   @UseGuards(GoogleOuthGuard)
   @Get('google/callback')
-  async goolgeCallback(@Req() request): Promise<any> {
-    return request.user;
+  async goolgeCallback(@Req() req) {
+    return req.user;
   }
 }

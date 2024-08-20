@@ -9,9 +9,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEnity } from '../user/entity/user.entity';
 import { JwtStrategy } from '../common/strategy/jwt.strategy';
 import { GoogleStrategy } from '../common/strategy/google.strategy';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
   imports: [
+    HttpModule,
     ConfigModule.forRoot({ isGlobal: true }),
     UserModule,
     TypeOrmModule.forFeature([UserEnity]),
@@ -34,7 +36,7 @@ import { GoogleStrategy } from '../common/strategy/google.strategy';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy],
+  providers: [AuthService, JwtStrategy, GoogleStrategy],
   exports: [PassportModule.register({ defaultStrategy: 'jwt' })],
 })
 export class AuthModule {}

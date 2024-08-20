@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty } from 'class-validator';
 
-export class UserPayload {
+export class RegisterPayload {
   @ApiProperty({
     required: true,
     example: 'SopheaktraLeng',
@@ -22,11 +22,22 @@ export class UserPayload {
   })
   @IsNotEmpty()
   firstname: string;
-
   @ApiProperty({
     required: true,
     example: 'Sopheaktra',
   })
+  @ApiProperty({
+    required: true,
+    example: 'Leng',
+  })
   lastname: string;
+  @ApiProperty({ nullable: true })
   picture: string;
+
+  @ApiProperty({
+    required: true,
+    example: '1234567',
+  })
+  @ApiProperty({ nullable: true })
+  password: string;
 }
