@@ -5,6 +5,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule, TypeOrmModuleAsyncOptions } from '@nestjs/typeorm';
 import { UserModule } from 'src/modules/user/user.module';
 import { AuthModule } from 'src/modules/auth/auth.module';
+import { TweetModule } from 'src/modules/tweet/tweet.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { AuthModule } from 'src/modules/auth/auth.module';
     }),
     UserModule,
     AuthModule,
+    TweetModule,
   ],
   controllers: [AppController],
   providers: [AppService],

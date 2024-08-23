@@ -11,6 +11,7 @@ services:
       - ./src:/app/src
       - ./test:/app/test
       - .env:/app/.env
+      - ./upload:/app/upload
     restart: unless-stopped
   db:
     image: postgres:14.10
