@@ -6,6 +6,8 @@ import { TypeOrmModule, TypeOrmModuleAsyncOptions } from '@nestjs/typeorm';
 import { UserModule } from 'src/modules/user/user.module';
 import { AuthModule } from 'src/modules/auth/auth.module';
 import { TweetModule } from 'src/modules/tweet/tweet.module';
+import { CacheModule, CacheModuleAsyncOptions } from '@nestjs/cache-manager';
+import * as redisStore from 'cache-manager-redis-store';
 
 @Module({
   imports: [
@@ -26,6 +28,19 @@ import { TweetModule } from 'src/modules/tweet/tweet.module';
           entities: [__dirname + './../**/**.entity{.ts,.js}'],
           synchronize: configService.get<string>('DB_SYNC'),
         } as TypeOrmModuleAsyncOptions;
+      },
+    }),
+    CacheModule.registerAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => {
+        return {
+          store: redisStore,
+          ttl: configService.get<number>('CACHE_TTL'),
+          max: configService.get<number>('CACHE_MAX'),
+          host: configService.get<string>('CACHE_HOST'),
+          port: configService.get<number>('CACHE_PORT'),
+        } as CacheModuleAsyncOptions;
       },
     }),
     UserModule,

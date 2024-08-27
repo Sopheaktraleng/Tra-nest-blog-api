@@ -7,6 +7,7 @@ services:
       - 4000:4000
     depends_on:
       - db
+      - redis
     volumes:
       - ./src:/app/src
       - ./test:/app/test
@@ -24,5 +25,18 @@ services:
       - 5432:5432
     volumes:
       - postgresdata:/var/lib/postgresql
+  redis:
+    image: redis:5
+    container_name: tra-redis
+    ports:
+      - 6379:6379
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    environment:
+      - REDIS_HOST=local:tra-redis:6379
+    ports:
+      - 8082:8081
+    depends_on:
+      - redis
 volumes:
   postgresdata:
