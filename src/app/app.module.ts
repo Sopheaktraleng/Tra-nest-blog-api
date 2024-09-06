@@ -8,6 +8,8 @@ import { AuthModule } from 'src/modules/auth/auth.module';
 import { TweetModule } from 'src/modules/tweet/tweet.module';
 import { CacheModule, CacheModuleAsyncOptions } from '@nestjs/cache-manager';
 import * as redisStore from 'cache-manager-redis-store';
+import { Mongoose } from 'mongoose';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
@@ -30,6 +32,7 @@ import * as redisStore from 'cache-manager-redis-store';
         } as TypeOrmModuleAsyncOptions;
       },
     }),
+    // MongooseModule.forRootAsync
     CacheModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],

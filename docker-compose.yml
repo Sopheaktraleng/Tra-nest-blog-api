@@ -1,4 +1,4 @@
-version: "2"
+version: "3.8"
 services:
   server:
     build: .
@@ -8,6 +8,7 @@ services:
     depends_on:
       - db
       - redis
+      - mongo-db
     volumes:
       - ./src:/app/src
       - ./test:/app/test
@@ -25,6 +26,15 @@ services:
       - 5432:5432
     volumes:
       - postgresdata:/var/lib/postgresql
+  mongo-db:
+    image: mongo:latest
+    container_name: tra-mongo
+    restart: always
+    ports:
+      - '2701:2701'
+    environment:
+      MONGO_USER: mongo
+      MONGO_PASSWORD: mongo
   redis:
     image: redis:5
     container_name: tra-redis
