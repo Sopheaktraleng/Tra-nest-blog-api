@@ -31,10 +31,10 @@ services:
     container_name: tra-mongo
     restart: always
     ports:
-      - '2701:2701'
+      - '27017:27017'
     environment:
-      MONGO_USER: mongo
-      MONGO_PASSWORD: mongo
+      MONGO_INITDB_ROOT_USERNAME: nest
+      MONGO_INITDB_ROOT_PASSWORD: nest
   redis:
     image: redis:5
     container_name: tra-redis

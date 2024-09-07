@@ -8,8 +8,8 @@ import { AuthModule } from 'src/modules/auth/auth.module';
 import { TweetModule } from 'src/modules/tweet/tweet.module';
 import { CacheModule, CacheModuleAsyncOptions } from '@nestjs/cache-manager';
 import * as redisStore from 'cache-manager-redis-store';
-import { Mongoose } from 'mongoose';
 import { MongooseModule } from '@nestjs/mongoose';
+import { BookModule } from 'src/modules/book/book.module';
 
 @Module({
   imports: [
@@ -32,7 +32,13 @@ import { MongooseModule } from '@nestjs/mongoose';
         } as TypeOrmModuleAsyncOptions;
       },
     }),
-    // MongooseModule.forRootAsync
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        uri: configService.get<string>('DB_URI'),
+      }),
+    }),
     CacheModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -49,6 +55,7 @@ import { MongooseModule } from '@nestjs/mongoose';
     UserModule,
     AuthModule,
     TweetModule,
+    BookModule,
   ],
   controllers: [AppController],
   providers: [AppService],
