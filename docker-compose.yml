@@ -32,9 +32,6 @@ services:
     restart: always
     ports:
       - '27017:27017'
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: nest
-      MONGO_INITDB_ROOT_PASSWORD: nest
   redis:
     image: redis:5
     container_name: tra-redis
@@ -43,7 +40,7 @@ services:
   redis-commander:
     image: rediscommander/redis-commander:latest
     environment:
-      - REDIS_HOST=local:tra-redis:6379
+      - REDIS_HOST=tra-redis
     ports:
       - 8082:8081
     depends_on:

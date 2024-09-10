@@ -8,7 +8,7 @@ import { AuthModule } from 'src/modules/auth/auth.module';
 import { TweetModule } from 'src/modules/tweet/tweet.module';
 import { CacheModule, CacheModuleAsyncOptions } from '@nestjs/cache-manager';
 import * as redisStore from 'cache-manager-redis-store';
-import { MongooseModule } from '@nestjs/mongoose';
+import { MongooseModule, MongooseModuleAsyncOptions } from '@nestjs/mongoose';
 import { BookModule } from 'src/modules/book/book.module';
 
 @Module({
