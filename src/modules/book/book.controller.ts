@@ -1,4 +1,12 @@
-import { Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { BookService } from './book.service';
 import { BookPayload } from './payload/book.payload';
 import { ApiTags } from '@nestjs/swagger';
@@ -8,7 +16,7 @@ import { ApiTags } from '@nestjs/swagger';
 export class BookController {
   constructor(private readonly bookService: BookService) {}
   @Post()
-  createBook(payload: BookPayload) {
+  createBook(@Body() payload: BookPayload) {
     return this.bookService.createBook(payload);
   }
   @Get()
