@@ -10,6 +10,8 @@ import { CacheModule, CacheModuleAsyncOptions } from '@nestjs/cache-manager';
 import * as redisStore from 'cache-manager-redis-store';
 import { MongooseModule } from '@nestjs/mongoose';
 import { BookModule } from 'src/modules/book/book.module';
+import { APP_GUARD } from '@nestjs/core';
+import { RolesGuard } from 'src/modules/common/guard/roles.guard';
 
 @Module({
   imports: [
@@ -58,6 +60,6 @@ import { BookModule } from 'src/modules/book/book.module';
     BookModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, { provide: APP_GUARD, useClass: RolesGuard }],
 })
 export class AppModule {}

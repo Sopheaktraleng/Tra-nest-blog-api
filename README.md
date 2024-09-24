@@ -23,10 +23,11 @@
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
 ## Description
- Mini Secial Media with nest js as Backend. The project has a lot of features, can perform CRUD user and tweet, enable user to upload file and have caching Redis in order to speed to request, reponse performent.
 
+Mini Secial Media with nest js as Backend. The project has a lot of features, can perform CRUD user and tweet, enable user to upload file and have caching Redis in order to speed to request, reponse performent.
 
 ## Set Up
+
 ```bash
 $ git clone https://github.com/Sopheaktraleng/Tra-nest-blog-api.git
 $ docker compose up -d

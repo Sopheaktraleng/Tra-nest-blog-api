@@ -1,12 +1,10 @@
-entity: UserEntity
-items:
-  user1:
-    name: '{{name.firstName}} {{name.lastName}}'
-    username: user
-    password: admin
-    email: '{{internet.email}}'
-  user2:  
-    name: '{{name.firstName}} {{name.lastName}}'
-    username: '{{internet.userName}}'
-    password: '{{internet.password}}'
-    email: '{{internet.email}}'
+entities:
+  UserEntity:
+    items:
+      {{#repeat 10}}
+      user{{counter}}:
+        name: '{{name.firstName}} {{name.lastName}}'
+        username: '{{internet.userName}}'
+        password: '{{internet.password}}'
+        email: '{{internet.email}}'
+      {{/repeat}}

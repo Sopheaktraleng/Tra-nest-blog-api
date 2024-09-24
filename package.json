@@ -17,7 +17,8 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "fixture:generate": "fixtures load ./fixtures --dataSource=./dataSource.ts --sync --require=ts-node/register --require=tsconfig-paths/register"
   },
   "dependencies": {
     "@faker-js/faker": "^8.4.1",
@@ -74,6 +75,7 @@
     "ts-loader": "^9.4.3",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.2.0",
+    "typeorm-fixtures-cli": "^4.0.0",
     "typescript": "^5.1.3"
   },
   "jest": {

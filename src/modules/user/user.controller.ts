@@ -12,6 +12,8 @@ import { UserPayload } from './payload/user.payload';
 import { UserEnity } from './entity/user.entity';
 import { ApiTags } from '@nestjs/swagger';
 import { RegisterPayload } from './payload/register.payload';
+import { Roles } from '../common/decorator/roles.decorator';
+import { AppRoles } from '../common/enum/role.enum';
 
 @Controller('users')
 @ApiTags('Users')
@@ -31,7 +33,7 @@ export class UserController {
   async getUserById(@Param('id') id: string): Promise<UserEnity> {
     return this.userService.getUserById(id);
   }
-
+  @Roles(AppRoles.ADMIN)
   @Delete(':id')
   deleteUserById(@Param('id') id: string) {
     return this.userService.deleteUserById(id);
