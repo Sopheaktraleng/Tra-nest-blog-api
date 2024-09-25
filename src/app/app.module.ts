@@ -12,6 +12,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { BookModule } from 'src/modules/book/book.module';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from 'src/modules/common/guard/roles.guard';
+import { ChatModule } from 'src/modules/chat/chat.moulde';
 
 @Module({
   imports: [
@@ -58,6 +59,7 @@ import { RolesGuard } from 'src/modules/common/guard/roles.guard';
     AuthModule,
     TweetModule,
     BookModule,
+    ChatModule,
   ],
   controllers: [AppController],
   providers: [AppService, { provide: APP_GUARD, useClass: RolesGuard }],

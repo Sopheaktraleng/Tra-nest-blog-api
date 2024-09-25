@@ -17,8 +17,7 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json",
-    "fixture:generate": "fixtures load ./fixtures --dataSource=./dataSource.ts --sync --require=ts-node/register --require=tsconfig-paths/register"
+    "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
     "@faker-js/faker": "^8.4.1",
@@ -32,8 +31,10 @@
     "@nestjs/mongoose": "^10.0.10",
     "@nestjs/passport": "^10.0.3",
     "@nestjs/platform-express": "^10.0.0",
+    "@nestjs/platform-socket.io": "^10.4.4",
     "@nestjs/swagger": "^7.4.0",
     "@nestjs/typeorm": "^10.0.2",
+    "@nestjs/websockets": "^10.4.4",
     "@types/passport-jwt": "^4.0.1",
     "axios": "^1.7.4",
     "bcryptjs": "^2.4.3",
